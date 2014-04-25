@@ -5,6 +5,9 @@ import scala.io.Source
 object Main extends App {
 
   for (line <- Source.fromURL(getClass.getResource("/kinship.data")).getLines())
-    println(line)
+    if (!line.isEmpty)
+      println(Prolog.parse(line))
+
+  //println(FOL.parse("hello(x, y)"))
 
 }
