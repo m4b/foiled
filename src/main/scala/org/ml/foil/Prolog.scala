@@ -7,7 +7,7 @@ import scala.util.parsing.combinator.JavaTokenParsers
  *
  * Created by m4b on 4/24/14.
  */
-class Prolog (val predicate: String, val variables: List[String]) {
+class Prolog private (val predicate: String, val variables: List[String]) {
   require (!variables.isEmpty)
 
   def apply(i: Int) = if (i == 0) predicate else variables(i-1)
@@ -19,6 +19,8 @@ class Prolog (val predicate: String, val variables: List[String]) {
 }
 
 object Prolog extends JavaTokenParsers {
+
+  def apply(s: String): Prolog = parse(s)
 
   private def literal: Parser[Prolog] = predicate~variables ^^ (x => new Prolog(x._1, x._2))
 
