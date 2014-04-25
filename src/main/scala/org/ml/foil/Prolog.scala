@@ -3,7 +3,7 @@ package org.ml.foil
 import scala.util.parsing.combinator.JavaTokenParsers
 
 /**
- * Represents an N-ary prologesque predicate literal
+ * Represents an N-ary prolog predicate literal
  *
  * Created by m4b on 4/24/14.
  */
