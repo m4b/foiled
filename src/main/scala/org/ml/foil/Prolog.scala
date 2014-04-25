@@ -10,7 +10,7 @@ import scala.util.parsing.combinator.JavaTokenParsers
 class Prolog (val predicate: String, val variables: List[String]) {
   require (!variables.isEmpty)
 
-  def apply(i: Int) = variables(i)
+  def apply(i: Int) = if (i == 0) predicate else variables(i-1)
 
   def len = variables.length
 
