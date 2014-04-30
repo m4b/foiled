@@ -21,8 +21,7 @@ class Data private (val clauses: java.util.List[Prolog]){
   val numRelations = relations.size
 
   private def getTupleMap = {
-    // hardcoding binary relations for now
-    //var tupleMap = Map.empty[String, mutable.MutableList[List[String]]]
+    // TODO: make string and List[List[String]] separate types, Relation and  RelationArguments/Tuples/RelationLiterals, respectively
     var tupleMap = Map.empty[String, List[List[String]]]
     for (clause <- this.clauses){
       if (tupleMap.contains(clause.predicate)){
