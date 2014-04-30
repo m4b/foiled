@@ -3,6 +3,8 @@ package org.ml.foil
 import scala.io.Source
 import java.util
 import scala.collection.JavaConversions._
+import scala.collection.mutable.Map
+import scala.collection.mutable
 
 /**
  * Class for getting a list of prolog clauses into a "Data" format, for use by our learner
@@ -12,8 +14,38 @@ import scala.collection.JavaConversions._
 class Data private (val clauses: java.util.List[Prolog]){
 
   val vars = getConstants.toArray
+  val relations = getRelations.toArray
+  val tupleMap = getTupleMap
 
   val numVars = vars.size
+  val numRelations = relations.size
+
+  private def getTupleMap = {
+    // hardcoding binary relations for now
+    //var tupleMap = Map.empty[String, mutable.MutableList[List[String]]]
+    var tupleMap = Map.empty[String, List[List[String]]]
+    for (clause <- this.clauses){
+      if (tupleMap.contains(clause.predicate)){
+        //tupleMap(clause.predicate) += clause.variables
+        tupleMap += clause.predicate -> (clause.variables :: tupleMap(clause.predicate))
+      }else{
+        tupleMap += clause.predicate -> List(clause.variables)
+      }
+    }
+    tupleMap
+  }
+
+  /**
+   * yea, we loop over this twice...
+   * @return
+   */
+  private def getRelations = {
+    var set = Set.empty[String]
+    for (clause <- this.clauses){
+      set += clause.predicate
+    }
+    set
+  }
 
   private def getConstants = {
     var set = Set.empty[String]
