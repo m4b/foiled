@@ -5,8 +5,8 @@ import java.util
 import scala.collection.JavaConversions._
 
 /**
- * Class for getting a list of prolog clauses, for use by our learner
- *
+ * Class for getting a list of prolog clauses into a "Data" format, for use by our learner
+
  * Created by m4b on 4/29/14.
  */
 class Data private (val clauses: java.util.List[Prolog]){
@@ -17,7 +17,7 @@ class Data private (val clauses: java.util.List[Prolog]){
 
   private def getConstants = {
     var set = Set.empty[String]
-    for (clause: Prolog <- this.clauses if !clause.variables.isEmpty){
+    for (clause <- this.clauses if !clause.variables.isEmpty){
       clause.variables.foreach(s => set += s)
     }
     set
