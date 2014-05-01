@@ -4,7 +4,6 @@ import scala.io.Source
 import java.util
 import scala.collection.JavaConversions._
 import scala.collection.mutable.Map
-import scala.collection.mutable
 
 /**
  * Class for getting a list of prolog clauses into a "Data" format, for use by our learner
@@ -22,10 +21,9 @@ class Data private (val clauses: java.util.List[Prolog]){
 
   private def getTupleMap = {
     // TODO: make string and List[List[String]] separate types, Relation and  RelationArguments/Tuples/RelationLiterals, respectively
-    var tupleMap = Map.empty[String, List[List[String]]]
+    val tupleMap = Map.empty[String, List[List[String]]]
     for (clause <- this.clauses){
       if (tupleMap.contains(clause.predicate)){
-        //tupleMap(clause.predicate) += clause.variables
         tupleMap += clause.predicate -> (clause.variables :: tupleMap(clause.predicate))
       }else{
         tupleMap += clause.predicate -> List(clause.variables)
@@ -35,7 +33,7 @@ class Data private (val clauses: java.util.List[Prolog]){
   }
 
   /**
-   * yea, we loop over this twice...
+   * yea, we loop over this twice (thrice)...
    * @return
    */
   private def getRelations = {
